@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var localbin = 'happyplan';
+
+// Especially badass external libs.
+var findup = require('findup-sync');
+var resolve = require('resolve').sync;
+
+// Internal libs.
+var options = require('../lib/cli').options;
+var info = require('../lib/info');
+
+var basedir = process.cwd();
+var localbinpath;
+
+// Do stuff based on CLI options.
+if (options.version) {
+  info.version();
+}
+
+try {
+  localbinpath = resolve(localbin, {basedir: basedir});
+} catch (ex) {
+  localbinpath = findup('lib/' + localbin + '.js');
+  // No localbin install found!
+  if (!localbinpath) {
+    if (options.version) { process.exit(); }
+    if (options.help) { info.help(); }
+    info.fatal('Unable to find local ' + localbin + '.', 99);
+  }
+}
+
+// Everything looks good. Require local bin and run it.
+require(localbinpath).cli();
