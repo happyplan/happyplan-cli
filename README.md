@@ -14,3 +14,9 @@ npm install -g happyplan-cli
 If you don't have administrator rights, you may need to install happyplan-cli locally to your project using `npm install happyplan-cli --save-dev`.  Unfortunately, this will not put the `happyplan` executable in your PATH.  You'll need to specify its explicit location when executing it, eg: `./node_modules/.bin/happyplan`,
 
 Note: Using happyplan-cli in this way is unsupported.
+
+## Checking version
+
+```bash
+happyplan -version
+```

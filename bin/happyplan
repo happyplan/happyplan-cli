@@ -12,7 +12,7 @@ var localHappyplanExist = require('fs').existsSync(packagePath);
 
 // Do stuff based on CLI options.
 if (options.version) {
-  info.version();
+  info.version(localHappyplanExist ? process.cwd() + '/' + packagePath + '/package.json' : null);
 }
 
 if (!localHappyplanExist) {
