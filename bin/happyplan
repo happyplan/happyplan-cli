@@ -2,35 +2,28 @@
 
 'use strict';
 
-var localbin = 'happyplan';
-
-// Especially badass external libs.
-var findup = require('findup-sync');
-var resolve = require('resolve').sync;
+var packagePath = 'node_modules/happyplan';
 
 // Internal libs.
 var options = require('../lib/cli').options;
 var info = require('../lib/info');
 
-var basedir = process.cwd();
-var localbinpath;
+var localHappyplanExist = require('fs').existsSync(packagePath);
 
 // Do stuff based on CLI options.
 if (options.version) {
   info.version();
 }
 
-try {
-  localbinpath = resolve(localbin, {basedir: basedir});
-} catch (ex) {
-  localbinpath = findup('lib/' + localbin + '.js');
-  // No localbin install found!
-  if (!localbinpath) {
-    if (options.version) { process.exit(); }
-    if (options.help) { info.help(); }
-    info.fatal('Unable to find local ' + localbin + '.', 99);
-  }
+if (!localHappyplanExist) {
+  info.fatal('Unable to find local package ' + packagePath + '.', 99);
 }
 
-// Everything looks good. Require local bin and run it.
-require(localbinpath).cli();
+// launch grunt from happyplan dir, & pass the current cwd
+var args = process.argv.slice(2);
+args.push('-root=' + process.cwd());
+
+require('child_process').spawn('grunt', args, {
+  cwd: packagePath,
+  stdio: 'inherit'
+});
