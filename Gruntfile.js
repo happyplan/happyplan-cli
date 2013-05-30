@@ -24,13 +24,12 @@ module.exports = function(grunt) {
         eqnull: true,
         node: true
       }
-    },
+    }
   });
 
-  // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-release');
 
-  // "npm test" runs these tasks
   grunt.registerTask('test', ['jshint']);
 
   // Default task.
