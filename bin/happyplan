@@ -20,8 +20,29 @@ if (!localHappyplanExist) {
 }
 
 // launch grunt from happyplan dir, & pass the current cwd
-var args = process.argv.slice(2);
-args.push('-root=' + process.cwd());
+var args = [];
+var opts = [];
+
+// prefix all command with happyplan:
+process.argv.slice(2).forEach(function(arg) {
+	if (arg.indexOf('-') === 0) {
+		opts.push(arg);
+	}
+	else {
+		args.push('happyplan:' + arg);
+	}
+});
+
+// add default command if needed
+if (args.length === 0) {
+	args.push('happyplan:default');
+}
+
+args = args.concat(opts);
+
+// add appropriate cwd
+args.push('--base')
+args.push(process.cwd());
 
 require('child_process').spawn('grunt', args, {
   cwd: packagePath,
