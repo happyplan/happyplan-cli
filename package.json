@@ -27,6 +27,9 @@
     "test": "grunt test"
   },
   "preferGlobal": true,
+  "peerDependencies": {
+    "grunt-cli": "~0.1.9"
+  },
   "dependencies": {
     "nopt": "~1.0.10"
   },
