@@ -47,4 +47,6 @@ args.push(process.cwd());
 require('child_process').spawn('grunt', args, {
   cwd: packagePath,
   stdio: 'inherit'
+}).on('close', function (code) {
+  process.exit(code);
 });
