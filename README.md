@@ -20,6 +20,3 @@ Note: Using happyplan-cli in this way is unsupported.
 ```bash
 happyplan -version
 ```
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/happyplan/happyplan-cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
