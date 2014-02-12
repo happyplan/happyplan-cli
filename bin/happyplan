@@ -2,7 +2,7 @@
 
 'use strict';
 
-var packagePath = 'node_modules/happyplan';
+var packagePath = './node_modules/happyplan';
 
 // Internal libs.
 var options = require('../lib/cli').options;
@@ -22,30 +22,45 @@ if (!localHappyplanExist) {
 // launch grunt from happyplan dir, & pass the current cwd
 var args = [];
 var opts = [];
+var prefix = !options.noprefix;
+var argsBeforeParsing = process.argv.slice(2);
+// remove some happyplan only option
+['--noprefix'].forEach(function(arg) {
+  var index = argsBeforeParsing.indexOf(arg);
+  if (index > -1) {
+    argsBeforeParsing.splice(index, 1);
+  }
+});
 
 // prefix all command with happyplan:
-process.argv.slice(2).forEach(function(arg) {
-	if (arg.indexOf('-') === 0) {
-		opts.push(arg);
-	}
-	else {
-		args.push('happyplan:' + arg);
-	}
-});
+if (prefix) {
+  argsBeforeParsing.forEach(function(arg) {
+    if (arg.indexOf('-') === 0) {
+      opts.push(arg);
+    }
+    else {
+      args.push('happyplan:' + arg);
+    }
+  });
+}
+else {
+  args = argsBeforeParsing;
+}
 
 // add default command if needed
 if (args.length === 0) {
-	args.push('happyplan:default');
+  args.push('happyplan:default');
 }
 
 args = args.concat(opts);
 
-// add appropriate cwd
+args.push('--gruntfile');
+args.push(packagePath + "/Gruntfile.js");
+
 args.push('--base');
 args.push(process.cwd());
 
 require('child_process').spawn('grunt', args, {
-  cwd: packagePath,
   stdio: 'inherit'
 }).on('close', function (code) {
   process.exit(code);
