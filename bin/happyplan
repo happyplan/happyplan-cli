@@ -54,7 +54,7 @@ else {
 }
 
 // add default command if needed
-if (args.length === 0) {
+if (args.length === 4) {
   args.push('happyplan:default');
 }
 
