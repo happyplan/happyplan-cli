@@ -32,6 +32,12 @@ var argsBeforeParsing = process.argv.slice(2);
   }
 });
 
+args.push('--gruntfile');
+args.push(packagePath + "/Gruntfile.js");
+
+args.push('--base');
+args.push(process.cwd());
+
 // prefix all command with happyplan:
 if (prefix) {
   argsBeforeParsing.forEach(function(arg) {
@@ -54,14 +60,10 @@ if (args.length === 0) {
 
 args = args.concat(opts);
 
-args.push('--gruntfile');
-args.push(packagePath + "/Gruntfile.js");
-
-args.push('--base');
-args.push(process.cwd());
-
+console.log(args)
 require('child_process').spawn('grunt', args, {
   stdio: 'inherit'
+// , cwd: packagePath
 }).on('close', function (code) {
   process.exit(code);
 });
