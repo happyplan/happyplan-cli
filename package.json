@@ -1,7 +1,7 @@
 {
   "name": "happyplan-cli",
   "description": "The happyplan command line interface.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "HappyPlan Team",
   "homepage": "http://mdwn.in/gh/happyplan/happyplan",
   "repository": {
