@@ -60,7 +60,6 @@ if (args.length === 0) {
 
 args = args.concat(opts);
 
-console.log(args)
 require('child_process').spawn('grunt', args, {
   stdio: 'inherit'
 // , cwd: packagePath
